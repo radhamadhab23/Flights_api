@@ -18,8 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     capacity:{ type:DataTypes.INTEGER,
-      allowNull:false
+      allowNull:false,
+      validate:{
+        min:1,
+        max:1000
+      }
     },
+
   }, {
     sequelize,
     modelName: 'Airplane',

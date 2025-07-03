@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api',apiRoutes);
+console.log('Registered /api route');
 
 app.listen(ServerConfig.PORT,() =>{
     console.log(`Server is running on port ${ServerConfig.PORT}`);
