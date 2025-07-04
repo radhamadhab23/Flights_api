@@ -1,11 +1,15 @@
 const express = require('express');
-const router = express.Router();
-const {InfoController} = require('../../controllers');
-// Importing the Airplane routes
-const airplaneRoutes = require('./airplane-routes');
 
-router.get('/info', InfoController.info);
+const { InfoController } = require('../../controllers');
+
+const airplaneRoutes = require('./airplane-routes');
+const cityRoutes = require('./city-routes');
+
+const router = express.Router();
+
 router.use('/airplanes', airplaneRoutes);
-console.log('Loaded airplane routes');
+router.use('/cities', cityRoutes);
+router.get('/info', InfoController.info);
+
 
 module.exports = router;
