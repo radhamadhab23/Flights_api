@@ -7,8 +7,13 @@ const router = express.Router();
 
 // /api/v1/cities POST
 router.post('/', 
-        CityMiddlewares.validateCreateRequest,
-        CityController.createCity);
+    CityMiddlewares.validateCreateRequest,
+    CityController.createCity);
 
+router.patch('/:id',
+    CityController.updateCity);
+
+router.delete('/:id',
+    CityController.deleteCity);
 
 module.exports = router;

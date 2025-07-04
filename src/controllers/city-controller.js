@@ -26,7 +26,47 @@ async function createCity(req, res) {
     return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
   }
 }
+async function updateCity(req, res) {
+  try {
+    const city = await CityService.updateCity(req.params.id, { name: req.body.name });
+
+    const response = { ...SuccessResponse, data: city };
+
+    return res.status(StatusCodes.OK).json(response);
+
+  } catch (error) {
+    const errorResponse = {
+      ...ErrorResponse,
+      message: 'Failed to update city',
+      data: {},
+      error: error.message || error
+    };
+
+    return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+  }
+}
+async function deleteCity(req, res) {
+  try {
+    await CityService.deleteCity(req.params.id);
+
+    const response = { ...SuccessResponse, data: null };
+
+    return res.status(StatusCodes.OK).json(response);
+
+  } catch (error) {
+    const errorResponse = {
+      ...ErrorResponse,
+      message: 'Failed to delete city',
+      data: {},
+      error: error.message || error
+    };
+
+    return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+  }
+}
 
 module.exports = {
-  createCity
+  createCity,
+  updateCity,
+  deleteCity
 };
