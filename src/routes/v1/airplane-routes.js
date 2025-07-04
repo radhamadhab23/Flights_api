@@ -6,5 +6,6 @@ router.post('/', AirplaneMiddleware.validateCreateRequest, AirplaneController.cr
 router.get('/', AirplaneController.getAirplanes);
 router.get('/:id', AirplaneController.getAirplane);
 router.delete('/:id', AirplaneController.destroyAirplane);
+router.patch('/:id',AirplaneController.updateAirplane);
 console.log('Registered airplane routes');
 module.exports = router;
