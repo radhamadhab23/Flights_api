@@ -1,4 +1,5 @@
-module.exports={
-    SuccessResponse:require('./success-response'),
-    ErrorResponse:require('./error-response')
+module.exports = {
+    ErrorResponse: require('./error-response'),
+    SuccessResponse: require('./success-response'),
+  
 }
