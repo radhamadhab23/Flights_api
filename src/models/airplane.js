@@ -9,18 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    // static associate(models) {
-    //   // define association here
-    //   this.hasMany(models.Flight, {
-    //     foreignKey: 'airplaneId',
-    //     onDelete: 'CASCADE'
-    //   });
+    static associate(models) {
+      // define association here
+      this.hasMany(models.Flight, {
+        foreignKey: 'airplaneId',
+        onDelete: 'CASCADE'
+      });
     //   this.hasMany(models.Seat, {
     //     foreignKey: 'airplaneId',
     //     onDelete: 'CASCADE'
     //   });
     // }
   }
+}
   Airplane.init({
     modelNumber: {
       type: DataTypes.STRING,
