@@ -59,10 +59,12 @@ async function getAllFlights(query) {
     try {
         const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
         return flights;
-    } catch(error) {
-        console.log(error);
-        throw new AppError('Cannot fetch data of all the flights', StatusCodes.INTERNAL_SERVER_ERROR);
-    }
+    } catch (error) {
+    console.error("🔥 Error while fetching flights:", error); // full object
+    console.error("🔥 Error stack:", error.stack); // stack trace
+    throw new AppError(error.message || 'Cannot fetch data of all the flights', StatusCodes.INTERNAL_SERVER_ERROR);
+}
+
 }
 
 async function getFlight(id) {

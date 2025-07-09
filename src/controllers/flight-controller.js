@@ -4,17 +4,6 @@ const { SuccessResponse, ErrorResponse } = require('../utils/common');
 
 /**
  * POST : /flights 
- * req-body {
- *  flightNumber: 'UK 808',
- *  airplaneId: 'a380',
- *  departureAirportId: 12,
- *  arrivalAirportId: 11,
- *  arrivalTime: '11:10:00',
- *  departureTime: '9:10:00',
- *  price: 2000,
- *  boardingGate: '12A',
- *  totalSeats: 120
- * }
  */
 async function createFlight(req, res) {
     try {
@@ -29,15 +18,21 @@ async function createFlight(req, res) {
             boardingGate: req.body.boardingGate,
             totalSeats: req.body.totalSeats
         });
+
         const response = {
             ...SuccessResponse,
             data: flight
         };
         return res.status(StatusCodes.CREATED).json(response);
     } catch (error) {
+        console.error("🔥 Error in createFlight controller:", error);
         const errResponse = {
             ...ErrorResponse,
-            error
+            error: {
+                message: error.message || 'Something went wrong',
+                explanation: error.explanation || null,
+                stack: error.stack || null
+            }
         };
         return res
             .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -45,6 +40,9 @@ async function createFlight(req, res) {
     }
 }
 
+/**
+ * GET : /flights?trips=BLR-MUM
+ */
 async function getAllFlights(req, res) {
     try {
         const flights = await FlightService.getAllFlights(req.query);
@@ -54,9 +52,14 @@ async function getAllFlights(req, res) {
         };
         return res.status(StatusCodes.OK).json(response);
     } catch (error) {
+        console.error("🔥 Error in getAllFlights controller:", error);
         const errResponse = {
             ...ErrorResponse,
-            error
+            error: {
+                message: error.message || 'Something went wrong',
+                explanation: error.explanation || null,
+                stack: error.stack || null
+            }
         };
         return res
             .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -76,9 +79,14 @@ async function getFlight(req, res) {
         };
         return res.status(StatusCodes.OK).json(response);
     } catch (error) {
+        console.error("🔥 Error in getFlight controller:", error);
         const errResponse = {
             ...ErrorResponse,
-            error
+            error: {
+                message: error.message || 'Something went wrong',
+                explanation: error.explanation || null,
+                stack: error.stack || null
+            }
         };
         return res
             .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -102,9 +110,14 @@ async function updateSeats(req, res) {
         };
         return res.status(StatusCodes.OK).json(response);
     } catch (error) {
+        console.error("🔥 Error in updateSeats controller:", error);
         const errResponse = {
             ...ErrorResponse,
-            error
+            error: {
+                message: error.message || 'Something went wrong',
+                explanation: error.explanation || null,
+                stack: error.stack || null
+            }
         };
         return res
             .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)

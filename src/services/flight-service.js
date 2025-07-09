@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const { Op } = require('sequelize');
-
+const { Airplane, Airport, City } = require('../models');
 const { FlightRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 
@@ -30,6 +30,10 @@ async function getAllFlights(query) {
         const [departureAirportId, arrivalAirportId] = query.trips.split("-");
         customFilter.departureAirportId = departureAirportId;
         customFilter.arrivalAirportId = arrivalAirportId;
+        // Check if departure and arrival airports are the same
+        if (departureAirportId === arrivalAirportId) {
+            throw new AppError('Departure and Arrival airports cannot be the same', StatusCodes.BAD_REQUEST);
+        }
     }
 
     // filter by price: price=1000-5000
@@ -59,6 +63,29 @@ async function getAllFlights(query) {
             ]
         };
     }
+    //fetch complete data of arrival and departure airports in the get all flights
+    const include = [
+        {
+            model: Airplane,
+            as: 'airplaneDetail'
+        },
+        {
+            model: Airport,
+            as: 'departureAirport',
+            include: {
+                model: City,
+                as: 'city'
+            }
+        },
+        {
+            model: Airport,
+            as: 'arrivalAirport',
+            include: {
+                model: City,
+                as: 'city'
+            }
+        }
+    ];
 
     // sort filter
     if (query.sort) {
@@ -70,7 +97,7 @@ async function getAllFlights(query) {
     console.log("🧮 Sorting:", sortFilter);
 
     try {
-        const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
+        const flights = await flightRepository.getAllFlights(customFilter, sortFilter, include);
         return flights;
     } catch (error) {
         console.error("🔥 Error while fetching flights:", error);

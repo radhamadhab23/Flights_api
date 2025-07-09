@@ -17,10 +17,15 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(models.Airport, {
         foreignKey: 'departureAirportId',
+        targetKey:'code',
+        // targetKey is used to specify the column in the Airport model that matches departureAirportId
+        // This is useful when the foreign key does not match the primary key of the associated model
         as: 'departureAirport',
       });
       this.belongsTo(models.Airport, {
         foreignKey: 'arrivalAirportId',
+        targetKey:'code',
+        // targetKey is used to specify the column in the Airport model that matches arrivalAirportId
         as: 'arrivalAirport',
       });
     }
