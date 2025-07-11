@@ -10,7 +10,7 @@ const getSeatType = (row) => {
   return ECONOMY;
 };
 
-module.exports = {
+module.exports = { 
   async up(queryInterface, Sequelize) {
     // ✅ Dynamically get an existing airplaneId
     const airplanes = await queryInterface.sequelize.query(

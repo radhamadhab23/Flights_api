@@ -41,6 +41,7 @@ function validateCreateRequest(req, res, next) {
 }
 
 function validateUpdateSeatsRequest(req, res, next) {
+  
     if (!req.body.seats) {
         const error = new AppError(
             ['seats not found in the incoming request in the correct form'],
